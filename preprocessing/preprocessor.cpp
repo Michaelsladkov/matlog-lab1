@@ -5,8 +5,6 @@
 #include <string>
 
 
-using namespace std;
-
 bool inVariableAlphabet(char c) {
     return (c >= '0' && c <= '9') ||
             (c >= 'A' && c <= 'Z') ||
@@ -36,11 +34,11 @@ char* remove_spaces(const char* line) {
     return new_line;
 }
 
-void get_lexemes(const char * line, vector<string>* lexemes){
+void get_lexemes(const char * line, std::vector<std::string>* lexemes){
     const char* ptr = line;
     while (*ptr != 0){
         if (*ptr == '(' || *ptr == ')' || *ptr == '!' || *ptr == '|' || *ptr == '&') {
-            string a = string(1, *ptr);
+            std::string a = std::string(1, *ptr);
             lexemes->push_back(a);
         }
         if (*ptr == '-') {
@@ -50,10 +48,10 @@ void get_lexemes(const char * line, vector<string>* lexemes){
             }
         }
         if (inVariableAlphabet(*ptr)) {
-            string a = "";
-            string b;
+            std::string a = "";
+            std::string b;
             while (inVariableAlphabet(*ptr)) {
-                b = string(1, *ptr);
+                b = std::string(1, *ptr);
                 a.append(b);
                 ptr++;
             }

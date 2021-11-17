@@ -5,20 +5,19 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 int main() {
-    string input;
-    getline(cin, input);
+    std::string input;
+    std::getline(std::cin, input);
     char* without_spaces = remove_spaces(input.data());
-    cout << without_spaces << endl;
-    vector<string> lexemes;
+    std::cout << without_spaces << std::endl;
+    std::vector<std::string> lexemes;
     get_lexemes(without_spaces, &lexemes);
     // for (size_t i = 0; i < lexemes.size(); i++) {
     //     cout << lexemes[i];
     // }
-    cout << endl;
+    std::cout << std::endl;
     Expression* tree = parse_expression(lexemes);
     print_tree(tree);
+    std::cout << tree -> evaluate() << std::endl;
     return 0;
 }

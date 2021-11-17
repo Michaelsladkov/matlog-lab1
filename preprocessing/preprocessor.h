@@ -4,9 +4,7 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 char* remove_spaces(const char* old);
-void get_lexemes(const char *, vector<string> *);
+void get_lexemes(const char *, std::vector<std::string> *);
 
 #endif
