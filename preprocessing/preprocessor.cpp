@@ -39,7 +39,7 @@ char* remove_spaces(const char* line) {
 void get_lexemes(const char * line, vector<string>* lexemes){
     const char* ptr = line;
     while (*ptr != 0){
-        if (*ptr == '(' || *ptr == ')' || *ptr == '!' || *ptr == '+' || *ptr == '*') {
+        if (*ptr == '(' || *ptr == ')' || *ptr == '!' || *ptr == '|' || *ptr == '&') {
             string a = string(1, *ptr);
             lexemes->push_back(a);
         }

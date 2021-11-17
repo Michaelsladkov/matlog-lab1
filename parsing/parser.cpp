@@ -11,7 +11,7 @@ using namespace std;
 static size_t find_lowest_priority(vector<string> lexemes);
 
 static bool check_brackets (vector<string> line) {
-    int level;
+    int level = 0;
     for (size_t i = 0; i < line.size(); i++) {
         if(line[i] == "(") level ++;
         if (line[i] == ")") level --;
@@ -22,6 +22,11 @@ static bool check_brackets (vector<string> line) {
 
 Expression* parse_expression(vector<string> lexemes){
     cout << lexemes.size() << endl;
+    if (lexemes.size() == 1) {
+        cout << "it is a variable: " << lexemes[0] << endl;
+        Variable* ret = new Variable(true, lexemes[0]);
+        return ret;
+    }
     size_t lowest_index = find_lowest_priority(lexemes);
     cout << lowest_index << "\t" << lexemes[lowest_index] << endl;
     vector<string> left;
@@ -58,18 +63,33 @@ static size_t find_lowest_priority(vector<string> lexemes) {
     size_t i = 0;
     size_t res = 0;
     for (string lex: lexemes) {
-        if (lex == "(") brackets_level+=10;
-        if (lex == ")") brackets_level-=10;
-        if (lex == "*") {
+        if (lex == "("){
+            brackets_level+=10;
+            i++;
+            continue;
+        }
+        if (lex == ")") {
+            brackets_level-=10;
+            i++;
+            continue;
+        }
+        if (lex == "!") {
+            priority = 4 + brackets_level;
+        }
+        else if (lex == "&") {
             priority = 3 + brackets_level;
         }
-        if (lex == "+") {
+        else if (lex == "|") {
             priority = 2 + brackets_level;
         }
-        if (lex == "->") {
+        else if (lex == "->") {
             priority = 1 + brackets_level;
         }
-        if (priority < lowest_priority) {
+        else {
+            i++;
+            continue;
+        }
+        if (priority <= lowest_priority) {
                 lowest_priority = priority;
                 res = i;
         }

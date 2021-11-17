@@ -18,6 +18,7 @@ int main() {
     //     cout << lexemes[i];
     // }
     cout << endl;
-    parse_expression(lexemes);
+    Expression* tree = parse_expression(lexemes);
+    print_tree(tree);
     return 0;
 }
