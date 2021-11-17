@@ -7,7 +7,7 @@
 
 using namespace std;
 
-bool inVarilableAlphabet(char c) {
+bool inVariableAlphabet(char c) {
     return (c >= '0' && c <= '9') ||
             (c >= 'A' && c <= 'Z') ||
             (c == '\'');
@@ -38,7 +38,7 @@ char* remove_spaces(const char* line) {
 
 void get_lexemes(const char * line, vector<string>* lexemes){
     const char* ptr = line;
-    while (ptr != 0){
+    while (*ptr != 0){
         if (*ptr == '(' || *ptr == ')' || *ptr == '!' || *ptr == '+' || *ptr == '*') {
             string a = string(1, *ptr);
             lexemes->push_back(a);
@@ -49,10 +49,10 @@ void get_lexemes(const char * line, vector<string>* lexemes){
                 lexemes->push_back("->");
             }
         }
-        if (inVarilableAlphabet(*ptr)) {
+        if (inVariableAlphabet(*ptr)) {
             string a = "";
             string b;
-            while (inVarilableAlphabet(*ptr)) {
+            while (inVariableAlphabet(*ptr)) {
                 b = string(1, *ptr);
                 a.append(b);
                 ptr++;

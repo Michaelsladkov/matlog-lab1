@@ -1,6 +1,6 @@
 #include "parser.h"
 
-#include "Operations.cpp"
+#include "Operations.h"
 
 #include <vector>
 #include <string>
@@ -10,10 +10,45 @@
 using namespace std;
 static size_t find_lowest_priority(vector<string> lexemes);
 
+static bool check_brackets (vector<string> line) {
+    int level;
+    for (size_t i = 0; i < line.size(); i++) {
+        if(line[i] == "(") level ++;
+        if (line[i] == ")") level --;
+        if (level < 0) return false;
+    }
+    return level == 0;
+}
+
 Expression* parse_expression(vector<string> lexemes){
+    cout << lexemes.size() << endl;
     size_t lowest_index = find_lowest_priority(lexemes);
     cout << lowest_index << "\t" << lexemes[lowest_index] << endl;
-    return 0;
+    vector<string> left;
+    for (size_t i = 0; i < lowest_index; i++) {
+        left.push_back(lexemes[i]);
+    }
+    vector<string> right;
+    for (size_t i = lowest_index + 1; i < lexemes.size(); i++) {
+        right.push_back(lexemes[i]);
+    }
+    if (!check_brackets(left)) {
+        left.erase(left.begin());
+    }
+    if (!check_brackets(right)) {
+        right.erase(right.end());
+    }
+    if (lexemes[lowest_index] == "!") {
+        Inversion* ret = new Inversion;
+        ret -> operand = parse_expression(right);
+        return ret;
+    }
+    string op_type = lexemes[lowest_index];
+    Binary_operation* ret = new Binary_operation;
+    ret -> left = parse_expression(left);
+    ret -> right = parse_expression(right);
+    ret -> type = op_type;
+    return ret;
 }
 
 static size_t find_lowest_priority(vector<string> lexemes) {

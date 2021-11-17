@@ -1,7 +1,7 @@
 #ifndef _PARSER
 #define _PARSER
 
-#include "Operations.cpp"
+#include "Operations.h"
 
 #include <vector>
 #include <string>

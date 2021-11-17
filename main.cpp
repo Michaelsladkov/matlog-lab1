@@ -14,6 +14,10 @@ int main() {
     cout << without_spaces << endl;
     vector<string> lexemes;
     get_lexemes(without_spaces, &lexemes);
+    // for (size_t i = 0; i < lexemes.size(); i++) {
+    //     cout << lexemes[i];
+    // }
+    cout << endl;
     parse_expression(lexemes);
     return 0;
 }

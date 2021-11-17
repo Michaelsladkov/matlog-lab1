@@ -1,2 +1,5 @@
-test: parsing/parser.cpp parsing/Operations.cpp preprocessing/preprocessor.cpp checkers.cpp main.cpp
-	gcc $^ -o test
+build: parsing/parser.cpp preprocessing/preprocessor.cpp checkers.cpp main.cpp
+	g++ $^ -o runme
+
+run: build
+	./runme
