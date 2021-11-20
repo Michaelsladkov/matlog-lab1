@@ -27,6 +27,14 @@ struct Variable : Expression {
         std::cout << name;
     }
 
+    std::string get_name() {
+        return name;
+    }
+
+    bool get_value() {
+        return value;
+    }
+
     virtual ~Variable() override {
         delete &name;
     }

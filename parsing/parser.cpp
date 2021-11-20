@@ -4,10 +4,14 @@
 
 #include <vector>
 #include <string>
+#include <set>
 
 #include <iostream>
 
 static size_t find_lowest_priority(std::vector<std::string> lexemes);
+
+std::set<Variable*> variables_set;
+std::set<std::string> variables_names_set;
 
 static bool check_brackets (std::vector<std::string> line) {
     int level = 0;
@@ -23,7 +27,18 @@ Expression* parse_expression(std::vector<std::string> lexemes){
     std::cout << lexemes.size() << std::endl;
     if (lexemes.size() == 1) {
         std::cout << "it is a variable: " << lexemes[0] << std::endl;
-        Variable* ret = new Variable(true, lexemes[0]);
+        Variable* ret = NULL;
+        if (variables_names_set.insert(lexemes[0]).second) {
+            ret = new Variable(false, lexemes[0]);
+            variables_set.insert(ret);
+        }
+        else {
+            for (Variable* v : variables_set) {
+                if (v -> get_name() == lexemes[0]) {
+                    ret = v;
+                }
+            }
+        }
         return ret;
     }
     size_t lowest_index = find_lowest_priority(lexemes);
@@ -95,4 +110,8 @@ static size_t find_lowest_priority(std::vector<std::string> lexemes) {
         i++;
     }
     return res;
+}
+
+std::set<Variable *>* get_variables_set() {
+    return &variables_set;
 }

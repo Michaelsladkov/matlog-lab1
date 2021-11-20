@@ -1,9 +1,11 @@
 #include "preprocessing/preprocessor.h"
 #include "parsing/parser.h"
+#include "analysis/analysis.h"
 
 #include <iostream>
 #include <vector>
 #include <string>
+#include <set>
 
 int main() {
     std::string input;
@@ -19,5 +21,20 @@ int main() {
     Expression* tree = parse_expression(lexemes);
     print_tree(tree);
     std::cout << tree -> evaluate() << std::endl;
+    std::set<Variable*>* vars = get_variables_set();
+    std::cout << vars -> size() << std::endl;
+    OPTIONS res = analyse(tree, vars);
+    switch (res)
+    {
+    case UNSATISFIABLE:
+        std::cout << "Unsatisfiable" << std::endl;
+        break;
+    case SATISFIABLE:
+        std::cout << "Satisfiable and invalid" << std::endl;
+        break;
+    case VALID:
+        std::cout << "Valid" << std::endl;
+        break;
+    }
     return 0;
 }
