@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 #include <set>
+#include <utility>
+#include <stdint.h>
 
 int main() {
     std::string input;
@@ -15,14 +17,15 @@ int main() {
     get_lexemes(without_spaces, &lexemes);
     Expression* tree = parse_expression(lexemes);
     std::set<Variable*>* vars = get_variables_set();
-    OPTIONS res = analyse(tree, vars);
+    std::pair<uint16_t, uint16_t> cases;
+    OPTIONS res = analyse(tree, vars, &cases);
     switch (res)
     {
     case UNSATISFIABLE:
         std::cout << "Unsatisfiable" << std::endl;
         break;
     case SATISFIABLE:
-        std::cout << "Satisfiable and invalid" << std::endl;
+        std::cout << "Satisfiable and invalid, "<< cases.first << " true and "<< cases.second <<" fasle cases" << std::endl;
         break;
     case VALID:
         std::cout << "Valid" << std::endl;
