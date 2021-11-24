@@ -25,7 +25,7 @@ int main() {
         std::cout << "Unsatisfiable" << std::endl;
         break;
     case SATISFIABLE:
-        std::cout << "Satisfiable and invalid, "<< cases.first << " true and "<< cases.second <<" fasle cases" << std::endl;
+        std::cout << "Satisfiable and invalid, "<< cases.first << " true and "<< cases.second <<" false cases" << std::endl;
         break;
     case VALID:
         std::cout << "Valid" << std::endl;
