@@ -21,7 +21,17 @@ static bool check_brackets (std::vector<std::string> line) {
     return level == 0;
 }
 
-Expression* parse_expression(std::vector<std::string> lexemes){
+static std::vector<std::string> eliminate_extra_brackets(std::vector<std::string> lex) {
+    if (lex[0] != "(") return lex;
+    std::vector<std::string> new_vector = lex;
+    new_vector.erase(new_vector.begin());
+    new_vector.erase(new_vector.end());
+    if (check_brackets(new_vector)) return eliminate_extra_brackets(new_vector);
+    else return lex;
+}
+
+Expression* parse_expression(std::vector<std::string> lexemes) {
+    lexemes = eliminate_extra_brackets(lexemes);
     if (lexemes.size() == 1) {
         Variable* ret = NULL;
         if (variables_names_set.insert(lexemes[0]).second) {
@@ -66,6 +76,9 @@ Expression* parse_expression(std::vector<std::string> lexemes){
 }
 
 static size_t find_lowest_priority(std::vector<std::string> lexemes) {
+    /* TODO:
+    * Учесть разную ассоциативность операторов
+    */
     int lowest_priority = 1000000;
     int priority;
     char brackets_level = 0;
@@ -98,9 +111,15 @@ static size_t find_lowest_priority(std::vector<std::string> lexemes) {
             i++;
             continue;
         }
-        if (priority <= lowest_priority) {
+        if (priority < lowest_priority) {
+            lowest_priority = priority;
+            res = i;
+        }
+        if (priority == lowest_priority) {
+            if (lex != "->" && lex != "!") {
                 lowest_priority = priority;
                 res = i;
+            }
         }
         i++;
     }

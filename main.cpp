@@ -15,6 +15,10 @@ int main() {
     char* without_spaces = remove_spaces(input.data());
     std::vector<std::string> lexemes;
     get_lexemes(without_spaces, &lexemes);
+    //for (std::string s : lexemes) {
+    //    std::cout << s;
+    //}
+    //std::cout << std::endl;
     Expression* tree = parse_expression(lexemes);
     std::set<Variable*>* vars = get_variables_set();
     std::pair<uint16_t, uint16_t> cases;
