@@ -56,12 +56,6 @@ Expression* parse_expression(std::vector<std::string> lexemes) {
     for (size_t i = lowest_index + 1; i < lexemes.size(); i++) {
         right.push_back(lexemes[i]);
     }
-    if (!check_brackets(left)) {
-        left.erase(left.begin());
-    }
-    if (!check_brackets(right)) {
-        right.erase(right.end());
-    }
     if (lexemes[lowest_index] == "!") {
         Inversion* ret = new Inversion;
         ret -> operand = parse_expression(right);
@@ -126,6 +120,6 @@ static size_t find_lowest_priority(std::vector<std::string> lexemes) {
     return res;
 }
 
-std::set<Variable *>* get_variables_set() {
+std::set<Variable*> * get_variables_set() {
     return &variables_set;
 }
