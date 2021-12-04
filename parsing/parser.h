@@ -5,10 +5,10 @@
 
 #include <vector>
 #include <string>
-#include <set>
+#include <map>
 
 Expression* parse_expression(std::vector<std::string>);
 void print_tree (Expression *);
-std::set<Variable*>* get_variables_set();
+std::map<std::string, Variable*>* get_variables();
 
 #endif

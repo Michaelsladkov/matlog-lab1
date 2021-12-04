@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <set>
+#include <map>
 #include <utility>
 #include <stdint.h>
 
@@ -20,7 +20,7 @@ int main() {
     //}
     //std::cout << std::endl;
     Expression* tree = parse_expression(lexemes);
-    std::set<Variable*>* vars = get_variables_set();
+    std::map<std::string, Variable*>* vars = get_variables();
     std::pair<uint16_t, uint16_t> cases;
     OPTIONS res = analyse(tree, vars, &cases);
     switch (res)

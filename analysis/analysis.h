@@ -3,7 +3,7 @@
 
 #include "../parsing/Operations.h"
 
-#include <set>
+#include <map>
 #include <utility>
 #include <stdint.h>
 
@@ -14,6 +14,6 @@ enum options {
 };
 typedef enum options OPTIONS;
 
-enum options analyse(Expression* tree, std::set<Variable*>* variables, std::pair<uint16_t, uint16_t>*);
+enum options analyse(Expression* tree, std::map<std::string, Variable*>* variables, std::pair<uint16_t, uint16_t>*);
 
 #endif

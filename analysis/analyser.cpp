@@ -2,16 +2,17 @@
 
 #include <stdint.h>
 #include <cmath>
+#include <map>
 #include <utility>
 
-static size_t create_array_from_set(Variable*** array, std::set<Variable*>* set) {
-    *array = new Variable*[set -> size()];
+static size_t create_array_from_map(Variable*** array, std::map<std::string, Variable*>* map) {
+    *array = new Variable*[map -> size()];
     Variable** ptr = *array;
-    for (Variable* v : *set) {
-        *ptr = v;
+    for (std::pair<std::string, Variable*> v : *map) {
+        *ptr = v.second;
         ptr ++;
     }
-    return set -> size();
+    return map -> size();
 }
 
 static void next_combination(Variable** array, size_t size) {
@@ -25,9 +26,9 @@ static void next_combination(Variable** array, size_t size) {
     }
 }
 
-enum options analyse(Expression* tree, std::set<Variable*>* variables_set, std::pair<uint16_t, uint16_t>* cases) {
+enum options analyse(Expression* tree, std::map<std::string, Variable*>* variables_map, std::pair<uint16_t, uint16_t>* cases) {
     Variable** variables_array = NULL;
-    size_t array_size = create_array_from_set(&variables_array, variables_set);
+    size_t array_size = create_array_from_map(&variables_array, variables_map);
     bool satisfied = tree -> evaluate();
     bool unsatisfied = !(tree -> evaluate());
     bool value;
